@@ -4,3 +4,5 @@ public class NewCharacterDto {
     public String characterName;
     public String characterClass;
 }
+
+

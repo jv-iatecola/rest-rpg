@@ -1,18 +1,22 @@
 package com.sadbmo.controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sadbmo.adapters.JsonMapperAdapter;
 import com.sadbmo.dtos.NewCharacterDto;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
-import java.util.Arrays;
 
 public class GameController implements HttpHandler {
+    private final JsonMapperAdapter mapper;
+
+    public GameController(JsonMapperAdapter mapper) {
+       this.mapper = mapper;
+    }
+
     @Override
-    public void handle(HttpExchange exchange) throws IOException {
+    public void handle(HttpExchange exchange) {
         try {
             if (exchange.getRequestMethod().equals("POST")) {
                 this.createCharacter(exchange);
@@ -25,10 +29,9 @@ public class GameController implements HttpHandler {
     private void createCharacter(HttpExchange exchange) throws Exception {
         InputStream inputStream = exchange.getRequestBody();
 
-        ObjectMapper mapper = new ObjectMapper();
-        NewCharacterDto characterDto = mapper.readValue(inputStream, NewCharacterDto.class);
+        NewCharacterDto characterDto = this.mapper.readValue(inputStream, NewCharacterDto.class);
 
-        Connection  connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/bs", "postgres", "");
+        Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/bs", "postgres", "");
         CallableStatement callableStatement = connection.prepareCall("CALL add_character(?, ?)");
         callableStatement.setString(1, characterDto.characterName);
         callableStatement.setString(2, characterDto.characterClass);
