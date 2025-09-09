@@ -1,18 +1,22 @@
 package com.sadbmo.controllers;
 
 import com.sadbmo.adapters.JsonMapperAdapter;
+import com.sadbmo.adapters.SqlAdapter;
 import com.sadbmo.dtos.NewCharacterDto;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 import java.io.InputStream;
-import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameController implements HttpHandler {
     private final JsonMapperAdapter mapper;
+    private final SqlAdapter dbAdapter;
 
-    public GameController(JsonMapperAdapter mapper) {
+    public GameController(JsonMapperAdapter mapper, SqlAdapter dbAdapter) {
        this.mapper = mapper;
+       this.dbAdapter = dbAdapter;
     }
 
     @Override
@@ -30,17 +34,15 @@ public class GameController implements HttpHandler {
         InputStream inputStream = exchange.getRequestBody();
 
         NewCharacterDto characterDto = this.mapper.readValue(inputStream, NewCharacterDto.class);
+        List<Object> params = new ArrayList<>();
+        params.add(characterDto.characterName);
+        params.add(characterDto.characterClass);
 
-        Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/bs", "postgres", "");
-        CallableStatement callableStatement = connection.prepareCall("CALL add_character(?, ?)");
-        callableStatement.setString(1, characterDto.characterName);
-        callableStatement.setString(2, characterDto.characterClass);
-        callableStatement.execute();
+        this.dbAdapter.callProcedure("CALL add_character(?, ?)", params);
 
         String response = String.format("Welcome! %s the %s!", characterDto.characterName, characterDto.characterClass) ;
         exchange.sendResponseHeaders(200, response.length());
         exchange.getResponseBody().write(response.getBytes());
         exchange.close();
     }
-
 }

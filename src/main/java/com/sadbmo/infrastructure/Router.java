@@ -1,7 +1,9 @@
 package com.sadbmo.infrastructure;
 
 import com.sadbmo.adapters.JacksonMapperAdapter;
+import com.sadbmo.adapters.JdbcAdapter;
 import com.sadbmo.adapters.JsonMapperAdapter;
+import com.sadbmo.adapters.SqlAdapter;
 import com.sadbmo.controllers.GameController;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
@@ -13,9 +15,10 @@ public class Router {
        this.server = server;
     }
 
-    public void execute() {
+    public void execute() throws Exception {
         JsonMapperAdapter mapper = new JacksonMapperAdapter();
-        HttpHandler gameController = new GameController(mapper);
+        SqlAdapter dbAdapter = new JdbcAdapter();
+        HttpHandler gameController = new GameController(mapper, dbAdapter);
 
         server.createContext("/anything", gameController);
     }
