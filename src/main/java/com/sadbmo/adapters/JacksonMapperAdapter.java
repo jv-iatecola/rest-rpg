@@ -13,7 +13,7 @@ public class JacksonMapperAdapter extends JsonMapperAdapter {
     }
 
     @Override
-    public <T>T readValue(InputStream inputStream, Class<T> valueType) throws IOException {
+    public <T> T readValue(InputStream inputStream, Class<T> valueType) throws IOException {
         return this.mapper.readValue(inputStream, valueType);
     }
 }
