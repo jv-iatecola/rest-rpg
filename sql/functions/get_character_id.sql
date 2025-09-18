@@ -9,7 +9,7 @@
 
 CREATE OR REPLACE FUNCTION get_character_id (p_name VARCHAR)
 RETURNS INT
-LANGUAGE sql
+LANGUAGE plpgsql
 AS $$
 DECLARE
     v_id INT;
@@ -17,7 +17,7 @@ BEGIN
     SELECT id
     INTO v_id
     FROM characters
-    WHERE name = p_name
+    WHERE name = p_name;
 
     RETURN v_id;
 END;
