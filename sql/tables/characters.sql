@@ -10,5 +10,5 @@
 CREATE TABLE characters (
     id SERIAL PRIMARY KEY,
     name VARCHAR(30) UNIQUE NOT NULL,
-    class VARCHAR(20) NOT NULL
+    character_class VARCHAR(20) NOT NULL
 );

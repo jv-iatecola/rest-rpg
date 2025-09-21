@@ -10,5 +10,5 @@
 CREATE TABLE worlds (
     id SERIAL PRIMARY KEY,
     mode VARCHAR(6) NOT NULL,
-    character_uuid_fk INTEGER UNIQUE NOT NULL
+    character_id INTEGER UNIQUE NOT NULL
 );

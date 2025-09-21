@@ -7,7 +7,7 @@
 -- - Modify with caution; production impact possible.
 -- ========================================
 
-CREATE OR REPLACE FUNCTION get_world_id (p_character_uuid_fk INTEGER)
+CREATE OR REPLACE FUNCTION get_world_id (p_character_id INTEGER)
 RETURNS INT
 LANGUAGE plpgsql
 AS $$
@@ -17,7 +17,7 @@ BEGIN
     SELECT id
     INTO v_id
     FROM worlds
-    WHERE character_uuid_fk = p_character_uuid_fk;
+    WHERE character_id = p_character_id;
 
     RETURN v_id;
 END;
