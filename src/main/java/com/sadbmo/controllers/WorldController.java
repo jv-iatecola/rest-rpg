@@ -34,7 +34,7 @@ public class WorldController implements HttpHandler {
         NewWorldDto worldDto = this.mapper.readValue(inputStream, NewWorldDto.class);
         try {
             worldRepository.addWorld(worldDto);
-            int worldId = worldRepository.getWorldId(worldDto.characterUuid);
+            int worldId = worldRepository.getWorldId(worldDto.characterId);
 
             String response = String.format("World %d created successfully!", worldId);
             exchange.sendResponseHeaders(200, response.length());

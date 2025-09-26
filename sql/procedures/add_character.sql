@@ -11,7 +11,7 @@ CREATE OR REPLACE PROCEDURE add_character (p_name VARCHAR(30), p_class VARCHAR(2
 LANGUAGE plpgsql
 AS $$
 BEGIN
-INSERT INTO characters (name, class)
+INSERT INTO characters (name, character_class)
 VALUES (p_name, p_class);
 END;
 $$;
