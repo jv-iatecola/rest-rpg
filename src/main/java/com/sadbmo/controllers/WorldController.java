@@ -2,7 +2,7 @@ package com.sadbmo.controllers;
 
 import com.sadbmo.adapters.JsonMapperAdapter;
 import com.sadbmo.dtos.NewWorldDto;
-import com.sadbmo.repository.WorldRepository;
+import com.sadbmo.repositories.WorldRepository;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 

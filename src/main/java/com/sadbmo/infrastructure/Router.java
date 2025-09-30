@@ -7,9 +7,9 @@ import com.sadbmo.adapters.SqlAdapter;
 import com.sadbmo.controllers.CharacterController;
 import com.sadbmo.controllers.GameController;
 import com.sadbmo.controllers.WorldController;
-import com.sadbmo.repository.CharacterRepository;
-import com.sadbmo.repository.GameRepository;
-import com.sadbmo.repository.WorldRepository;
+import com.sadbmo.repositories.CharacterRepository;
+import com.sadbmo.repositories.WorldRepository;
+import com.sadbmo.utils.Utils;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
@@ -25,10 +25,10 @@ public class Router {
         SqlAdapter dbAdapter = new JdbcAdapter();
         CharacterRepository characterRepository = new CharacterRepository(dbAdapter);
         WorldRepository worldRepository = new WorldRepository(dbAdapter);
-        GameRepository gameRepository = new GameRepository();
+        Utils utils = new Utils();
         HttpHandler characterController = new CharacterController(mapper, characterRepository);
         HttpHandler worldController = new WorldController(mapper, worldRepository);
-        HttpHandler gameController = new GameController(gameRepository);
+        HttpHandler gameController = new GameController(utils);
 
 
         server.createContext("/character", characterController);

@@ -1,8 +1,8 @@
-package com.sadbmo.repository;
+package com.sadbmo.utils;
 
 import java.util.LinkedHashMap;
 
-public class GameRepository {
+public class Utils {
 
     public LinkedHashMap<String, Integer> parseQuery(String query) {
         if (query == null || query.isEmpty()) {

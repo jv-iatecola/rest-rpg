@@ -2,7 +2,7 @@ package com.sadbmo.controllers;
 
 import com.sadbmo.adapters.JsonMapperAdapter;
 import com.sadbmo.dtos.NewCharacterDto;
-import com.sadbmo.repository.CharacterRepository;
+import com.sadbmo.repositories.CharacterRepository;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
