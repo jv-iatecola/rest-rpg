@@ -1,4 +1,4 @@
-package com.sadbmo.utils;
+package com.sadbmo.controllers.utils;
 
 import java.util.LinkedHashMap;
 

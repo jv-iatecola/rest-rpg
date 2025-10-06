@@ -32,18 +32,19 @@ public class CharacterController implements HttpHandler {
         InputStream inputStream = exchange.getRequestBody();
 
         NewCharacterDto characterDto = this.mapper.readValue(inputStream, NewCharacterDto.class);
+        String response = "";
         try {
             characterRepository.addCharacter(characterDto);
             int characterId = characterRepository.getCharacterId(characterDto.characterName);
 
-            String response = String.format("Welcome! %s the %s! Your character id is %d", characterDto.characterName, characterDto.characterClass, characterId);
+            response = String.format("Welcome! %s the %s! Your character id is %d", characterDto.characterName, characterDto.characterClass, characterId);
             exchange.sendResponseHeaders(200, response.length());
-            exchange.getResponseBody().write(response.getBytes());
-            exchange.close();
 
         } catch (Exception error) {
-            String response = String.format("Sorry, character name '%s' is already taken! Error %s", characterDto.characterName, error) ;
+            response = String.format("Sorry, character name '%s' is already taken! Error %s", characterDto.characterName, error) ;
             exchange.sendResponseHeaders(400, response.length());
+
+        } finally {
             exchange.getResponseBody().write(response.getBytes());
             exchange.close();
         }

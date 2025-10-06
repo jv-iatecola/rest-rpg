@@ -1,6 +1,7 @@
 package com.sadbmo.controllers;
 
-import com.sadbmo.utils.Utils;
+
+import com.sadbmo.controllers.utils.Utils;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -18,6 +19,7 @@ public class GameController implements HttpHandler {
         try {
             if (exchange.getRequestMethod().equals("GET")) {
                 this.startGame(exchange);
+
             }
         } catch (Exception error) {
             error.printStackTrace();
@@ -26,23 +28,25 @@ public class GameController implements HttpHandler {
 
     public void startGame(HttpExchange exchange) throws Exception{
         String query = exchange.getRequestURI().getQuery();
+        System.out.println("Controller Query: " + query);
         LinkedHashMap<String, Integer> params = utils.parseQuery(query);
 
+        String response = "";
         try {
-            int saveId = params.get("saveid");
-            int episode = params.get("ep");
+            int saveId = params.get("save_id");
+            int episode = params.get("episode");
 
-            String response = """
+            response = """
             You wake up from a dreamless sleep, alone, with no recollection on how you got here, amidst a lush, green jungle.
             You look up to try and find some answers, only to discover that the sun is already setting. You must act quickly, what will you do? Explore, Bag, Retreat
             """;
             exchange.sendResponseHeaders(200, response.length());
-            exchange.getResponseBody().write(response.getBytes());
-            exchange.close();
 
         } catch (Exception error) {
-            String response = String.format("Sorry, failed to load the game. Error: $s", error);
+            response = String.format("Sorry, failed to load the game. Error: $s", error);
             exchange.sendResponseHeaders(400, response.length());
+
+        } finally {
             exchange.getResponseBody().write(response.getBytes());
             exchange.close();
         }

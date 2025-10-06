@@ -15,9 +15,10 @@ public class WorldRepository {
     }
 
     public void addWorld(NewWorldDto worldDto) throws Exception {
-        List<Object> params = new ArrayList<>();
-        params.add(worldDto.gameMode);
-        params.add(worldDto.characterId);
+        List<Object> params = List.of(
+                worldDto.gameMode,
+                worldDto.characterId
+        );
 
         this.dbAdapter.callProcedure("CALL add_world(?, ?)", params);
     }
