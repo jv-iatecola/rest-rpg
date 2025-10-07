@@ -1,4 +1,4 @@
-package com.sadbmo.controllers.utils;
+package com.sadbmo.utils;
 
 import java.util.LinkedHashMap;
 
@@ -11,14 +11,20 @@ public class Utils {
 
         String[] pairs = query.split("&");
 
+
         var params = new LinkedHashMap<String, Integer>();
         for (String pair : pairs) {
             String[] keyValue = pair.split("=", 2);
             String key = keyValue[0];
-            String value = keyValue.length > 1 ? keyValue[1] : "";
-            Integer intValue = Integer.parseInt(value);
+            String value = keyValue.length > 1 ? keyValue[1] : null;
 
-            params.put(key, intValue);
+            try {
+                Integer intValue = (value != null && !value.isEmpty()) ? Integer.parseInt(value) : null;
+
+                params.put(key, intValue);
+            } catch (Exception error) {
+                params.put(key, null);
+            }
         }
         return params;
     }

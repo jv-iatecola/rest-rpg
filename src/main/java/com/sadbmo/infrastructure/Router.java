@@ -7,7 +7,7 @@ import com.sadbmo.adapters.SqlAdapter;
 import com.sadbmo.controllers.CharacterController;
 import com.sadbmo.controllers.GameController;
 import com.sadbmo.controllers.WorldController;
-import com.sadbmo.controllers.utils.Utils;
+import com.sadbmo.utils.Utils;
 import com.sadbmo.repositories.CharacterRepository;
 import com.sadbmo.repositories.WorldRepository;
 
