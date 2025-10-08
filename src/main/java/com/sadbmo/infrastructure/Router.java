@@ -5,9 +5,12 @@ import com.sadbmo.adapters.JdbcAdapter;
 import com.sadbmo.adapters.JsonMapperAdapter;
 import com.sadbmo.adapters.SqlAdapter;
 import com.sadbmo.controllers.CharacterController;
+import com.sadbmo.controllers.GameController;
 import com.sadbmo.controllers.WorldController;
-import com.sadbmo.repository.CharacterRepository;
-import com.sadbmo.repository.WorldRepository;
+import com.sadbmo.utils.Utils;
+import com.sadbmo.repositories.CharacterRepository;
+import com.sadbmo.repositories.WorldRepository;
+
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
@@ -23,11 +26,14 @@ public class Router {
         SqlAdapter dbAdapter = new JdbcAdapter();
         CharacterRepository characterRepository = new CharacterRepository(dbAdapter);
         WorldRepository worldRepository = new WorldRepository(dbAdapter);
-        HttpHandler gameController = new CharacterController(mapper, characterRepository);
+        Utils utils = new Utils();
+        HttpHandler characterController = new CharacterController(mapper, characterRepository);
         HttpHandler worldController = new WorldController(mapper, worldRepository);
+        HttpHandler gameController = new GameController(utils);
 
 
-        server.createContext("/character", gameController);
+        server.createContext("/character", characterController);
         server.createContext("/world", worldController);
+        server.createContext("/game", gameController);
     }
 }

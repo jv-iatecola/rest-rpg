@@ -1,4 +1,4 @@
-package com.sadbmo.repository;
+package com.sadbmo.repositories;
 
 import com.sadbmo.adapters.SqlAdapter;
 import com.sadbmo.dtos.NewCharacterDto;

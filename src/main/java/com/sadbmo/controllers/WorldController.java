@@ -2,7 +2,7 @@ package com.sadbmo.controllers;
 
 import com.sadbmo.adapters.JsonMapperAdapter;
 import com.sadbmo.dtos.NewWorldDto;
-import com.sadbmo.repository.WorldRepository;
+import com.sadbmo.repositories.WorldRepository;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -32,18 +32,19 @@ public class WorldController implements HttpHandler {
         InputStream inputStream = exchange.getRequestBody();
 
         NewWorldDto worldDto = this.mapper.readValue(inputStream, NewWorldDto.class);
+        String response = "";
         try {
             worldRepository.addWorld(worldDto);
-            int worldId = worldRepository.getWorldId(worldDto.characterUuid);
+            int worldId = worldRepository.getWorldId(worldDto.characterId);
 
-            String response = String.format("World %d created successfully!", worldId);
+            response = String.format("World %d created successfully!", worldId);
             exchange.sendResponseHeaders(200, response.length());
-            exchange.getResponseBody().write(response.getBytes());
-            exchange.close();
 
         } catch (Exception error) {
-            String response = String.format("Failed to create world, error: %s.", error);
+            response = String.format("Failed to create world, error: %s.", error);
             exchange.sendResponseHeaders(400, response.length());
+
+        } finally {
             exchange.getResponseBody().write(response.getBytes());
             exchange.close();
         }
