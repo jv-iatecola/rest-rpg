@@ -5,14 +5,14 @@ import java.util.LinkedHashMap;
 public class Utils {
 
     public LinkedHashMap<String, Integer> parseQuery(String query) {
+        var params = new LinkedHashMap<String, Integer>();
         if (query == null || query.isEmpty()) {
-            return new LinkedHashMap<String, Integer>();
+            return params;
         }
 
         String[] pairs = query.split("&");
 
 
-        var params = new LinkedHashMap<String, Integer>();
         for (String pair : pairs) {
             String[] keyValue = pair.split("=", 2);
             String key = keyValue[0];
@@ -22,7 +22,7 @@ public class Utils {
                 Integer intValue = (value != null && !value.isEmpty()) ? Integer.parseInt(value) : null;
 
                 params.put(key, intValue);
-            } catch (Exception error) {
+            } catch (NumberFormatException error) {
                 params.put(key, null);
             }
         }
