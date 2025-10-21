@@ -5,8 +5,11 @@ import com.sadbmo.adapters.JdbcAdapter;
 import com.sadbmo.adapters.JsonMapperAdapter;
 import com.sadbmo.adapters.SqlAdapter;
 import com.sadbmo.controllers.CharacterController;
+import com.sadbmo.controllers.ExploreController;
 import com.sadbmo.controllers.GameController;
 import com.sadbmo.controllers.WorldController;
+import com.sadbmo.repositories.ExploreRepository;
+import com.sadbmo.services.EventService;
 import com.sadbmo.utils.Utils;
 import com.sadbmo.repositories.CharacterRepository;
 import com.sadbmo.repositories.WorldRepository;
@@ -26,14 +29,19 @@ public class Router {
         SqlAdapter dbAdapter = new JdbcAdapter();
         CharacterRepository characterRepository = new CharacterRepository(dbAdapter);
         WorldRepository worldRepository = new WorldRepository(dbAdapter);
+        ExploreRepository exploreRepository = new ExploreRepository(dbAdapter);
         Utils utils = new Utils();
+        EventService eventService = EventService.createInstance(utils);
+
         HttpHandler characterController = new CharacterController(mapper, characterRepository);
         HttpHandler worldController = new WorldController(mapper, worldRepository);
         HttpHandler gameController = new GameController(utils);
+        HttpHandler exploreController = new ExploreController(utils, eventService, exploreRepository);
 
 
         server.createContext("/character", characterController);
         server.createContext("/world", worldController);
         server.createContext("/game", gameController);
+        server.createContext("/explore", exploreController);
     }
 }

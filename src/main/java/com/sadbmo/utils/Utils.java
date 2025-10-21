@@ -1,5 +1,6 @@
 package com.sadbmo.utils;
 
+import java.security.SecureRandom;
 import java.util.LinkedHashMap;
 
 public class Utils {
@@ -27,5 +28,47 @@ public class Utils {
             }
         }
         return params;
+    }
+
+    public int randomNumberGenerator(int range){
+        return randomNumberGenerator(0, range);
+    }
+
+    public int randomNumberGenerator(int start, int end){
+        SecureRandom secureRandom = new SecureRandom();
+        return secureRandom.nextInt(start, end);
+    }
+
+    public String ItemSelector(){
+        String[] lootItems = {
+                "Jaguar Fang Dagger",
+                "Vine-Wrapped Bow",
+                "Tanglewood Club",
+                "Healing Elixir",
+                "Sanity Tonic",
+                "Poison Ant Venom",
+                "Gold Pouch",
+                "Moonlit Amulet",
+                "Jungle Herbs",
+                "Sacred Idol Fragment"
+        };
+
+        return lootItems[randomNumberGenerator(lootItems.length)];
+    }
+
+    public String enemySelector(){
+        String[] jungleEnemies = {
+                "Wild Boar",
+                "Poisonfang Viper",
+                "Tribal Hunter",
+                "Eldritch Horror",
+                "Giant Centipede",
+                "Swamp Leech",
+                "Rogue Explorer",
+                "Forest Spider",
+                "Howling Monkey",
+                "Thornback Lizard"
+        };
+        return jungleEnemies[randomNumberGenerator(jungleEnemies.length)];
     }
 }
