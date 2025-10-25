@@ -9,14 +9,12 @@ import com.sun.net.httpserver.HttpHandler;
 
 import java.util.LinkedHashMap;
 
-
 public class ExploreController implements HttpHandler {
     private final Utils utils;
     private final EventService eventService;
     private final ExploreRepository exploreRepository;
 
     public ExploreController (Utils utils, EventService eventService, ExploreRepository exploreRepository) {
-
         this.utils = utils;
         this.eventService = eventService;
         this.exploreRepository = exploreRepository;
