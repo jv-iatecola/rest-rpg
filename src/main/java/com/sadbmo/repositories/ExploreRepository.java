@@ -26,5 +26,4 @@ public class ExploreRepository {
         });
         return result.getFirst();
     }
-
 }

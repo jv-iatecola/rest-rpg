@@ -3,14 +3,12 @@ package com.sadbmo.services;
 import com.sadbmo.utils.Utils;
 import java.util.Objects;
 
-
 public class EventService {
     public final Utils utils;
     private static int counter = 0;
     private static EventService instance;
 
     private EventService(Utils utils){
-
         this.utils = utils;
     }
 
@@ -109,7 +107,6 @@ public class EventService {
     }
 
     public String affectSanity () {
-
         String[] events = {
                 "After traversing a narrow path, you find yourself gazing at a majestic clearing, illuminated by the moon; this sight alone suffices to clear your mind of the night horrors. +%d sanity.",
 
